@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+            checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[credentialsId: '3bae39ce-5af6-4d36-a369-ee747d6e8d05', url: 'https://github.com/Abhiramgc/two_tier']]])           
+
+          }
+        }
+        
+        stage ("terraform init") {
+            steps {
+                sh ('terraform init') 
+            }
+
+        }
+		
+		
+		
+        
+        stage ("terraform Apply") {
+            steps {
+                echo "Terraform apply
+                sh ('terraform apply --auto-approve') 
+           }
+        }
+		
+		
+    }
+}
+
